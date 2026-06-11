@@ -1,1 +1,56 @@
+name: Daily CPI Update
 
+on:
+  schedule:
+    # Runs every day at 08:00 UTC (9am CET / 3am ET)
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+    # Also allows manual trigger from GitHub Actions tab
+
+jobs:
+  update-cpi:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to push output files back to repo
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run daily CPI scraper
+        env:
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
+        run: python run_daily.py
+
+      - name: Generate dashboard HTML
+        env:
+          EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
+          FRED_API_KEY: ${{ secrets.FRED_API_KEY }}
+          BLS_API_KEY: ${{ secrets.BLS_API_KEY }}
+        run: python generate_dashboard.py
+
+      - name: Commit and push output files
+        run: |
+          git config --global user.name "CPI-Bot"
+          git config --global user.email "cpi-bot@users.noreply.github.com"
+          git add output/ data/ dashboard/
+          git diff --staged --quiet || git commit -m "📊 Daily CPI update $(date -u '+%Y-%m-%d')"
+          git push
