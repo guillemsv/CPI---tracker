@@ -2,19 +2,301 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>US CPI Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>US CPI Tracker — Real-Time Inflation Monitor</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-  body { font-family: Arial, sans-serif; background: #f4f6f9; display: flex; align-items: center; justify-content: center; min-height: 100vh; }
-  .box { background: white; border-radius: 8px; padding: 40px; text-align: center; border: 1px solid #e0e0e0; max-width: 480px; }
-  h1 { color: #1f4e79; font-size: 20px; margin-bottom: 12px; }
-  p { color: #666; font-size: 14px; line-height: 1.6; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f4f6f9; color: #2c2c2c; font-size: 14px; }
+  .header { background: #1f4e79; color: white; padding: 20px 32px; }
+  .header h1 { font-size: 22px; font-weight: 600; }
+  .header p { font-size: 12px; opacity: 0.8; margin-top: 4px; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 24px 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+  .card { background: white; border-radius: 8px; padding: 20px; border: 0.5px solid #e0e0e0; }
+  .metric-label { font-size: 11px; color: #808080; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .metric-value { font-size: 32px; font-weight: 600; color: #1f4e79; }
+  .metric-sub { font-size: 11px; color: #808080; margin-top: 4px; }
+  .metric-value.hot { color: #c0504d; }
+  .metric-value.cool { color: #2d8653; }
+  h2 { font-size: 14px; font-weight: 600; color: #1f4e79; margin-bottom: 12px; border-bottom: 1px solid #e8eef4; padding-bottom: 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: #1f4e79; color: white; padding: 7px 10px; text-align: left; font-weight: 500; font-size: 11px; }
+  td { padding: 6px 10px; border-bottom: 0.5px solid #f0f0f0; }
+  tr:hover td { background: #f8fafc; }
+  .footer { text-align: center; font-size: 11px; color: #aaa; padding: 24px; }
+  .badge-coverage { display: inline-block; background: #e8f4ec; color: #2d8653; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+  @media (max-width: 600px) { .grid-3, .grid-2 { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
-<div class="box">
-  <h1>📊 US CPI Tracker</h1>
-  <p>Dashboard will populate after the first GitHub Actions run.<br><br>
-  Go to <strong>Actions → Daily CPI Update → Run workflow</strong></p>
+
+<div class="header">
+  <h1>📊 US CPI Tracker — Real-Time Inflation Monitor</h1>
+  <p>Daily-updated CPI nowcast built from EIA, FRED, Zillow, BLS APIs &nbsp;|&nbsp; Updated: 2026-06-11 &nbsp;|&nbsp;
+     <span class="badge-coverage" style="background:rgba(255,255,255,0.15);color:white">93.5% basket covered</span></p>
 </div>
+
+<div class="container">
+
+  <!-- Summary cards -->
+  <div class="grid-3">
+    <div class="card">
+      <div class="metric-label">Our Headline CPI Estimate</div>
+      <div class="metric-value ">+2.93%</div>
+      <div class="metric-sub">YoY % | Weighted avg of scraped data</div>
+    </div>
+    <div class="card">
+      <div class="metric-label">Our Core CPI Estimate</div>
+      <div class="metric-value ">+2.82%</div>
+      <div class="metric-sub">YoY % | Ex-food & energy</div>
+    </div>
+    <div class="card">
+      <div class="metric-label">BLS Official (latest release)</div>
+      <div class="metric-value">N/A</div>
+      <div class="metric-sub">Released  | Lags ~2 weeks</div>
+    </div>
+  </div>
+
+  <!-- Chart + category table -->
+  <div class="grid-2">
+    <div class="card">
+      <h2>Historical Estimate vs BLS Official</h2>
+      <canvas id="histChart" style="max-height:280px"></canvas>
+    </div>
+    <div class="card">
+      <h2>Category Breakdown</h2>
+      <table>
+        <thead><tr><th>Category</th><th>Weight</th><th>YoY %</th><th>Contrib.</th><th>Magnitude</th></tr></thead>
+        <tbody>
+        <tr>
+          <td>Housing</td>
+          <td style="text-align:center">40.2%</td>
+          <td style="text-align:center;color:#2e75b6;font-weight:600">+3.0%</td>
+          <td style="text-align:center">+120bp</td>
+          <td><div style="background:#2e75b6;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Food</td>
+          <td style="text-align:center">13.5%</td>
+          <td style="text-align:center;color:#c0504d;font-weight:600">+3.0%</td>
+          <td style="text-align:center">+41bp</td>
+          <td><div style="background:#c0504d;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Energy</td>
+          <td style="text-align:center">7.5%</td>
+          <td style="text-align:center;color:#c0504d;font-weight:600">+8.9%</td>
+          <td style="text-align:center">+11bp</td>
+          <td><div style="background:#c0504d;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Transportation</td>
+          <td style="text-align:center">8.1%</td>
+          <td style="text-align:center;color:#2e75b6;font-weight:600">+2.5%</td>
+          <td style="text-align:center">+20bp</td>
+          <td><div style="background:#2e75b6;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Medical Care</td>
+          <td style="text-align:center">8.8%</td>
+          <td style="text-align:center;color:#c0504d;font-weight:600">+3.3%</td>
+          <td style="text-align:center">+29bp</td>
+          <td><div style="background:#c0504d;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Education & Comm.</td>
+          <td style="text-align:center">6.5%</td>
+          <td style="text-align:center;color:#2e75b6;font-weight:600">+2.1%</td>
+          <td style="text-align:center">+13bp</td>
+          <td><div style="background:#2e75b6;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Recreation</td>
+          <td style="text-align:center">5.7%</td>
+          <td style="text-align:center;color:#2e75b6;font-weight:600">+2.3%</td>
+          <td style="text-align:center">+13bp</td>
+          <td><div style="background:#2e75b6;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Apparel</td>
+          <td style="text-align:center">2.4%</td>
+          <td style="text-align:center;color:#2e75b6;font-weight:600">+0.5%</td>
+          <td style="text-align:center">+1bp</td>
+          <td><div style="background:#2e75b6;height:10px;width:48%;border-radius:3px;min-width:2px"></div></td>
+        </tr>
+        <tr>
+          <td>Other</td>
+          <td style="text-align:center">4.1%</td>
+          <td style="text-align:center;color:#c0504d;font-weight:600">+4.1%</td>
+          <td style="text-align:center">+17bp</td>
+          <td><div style="background:#c0504d;height:10px;width:100%;border-radius:3px;min-width:2px"></div></td>
+        </tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Component detail -->
+  <div class="card">
+    <h2>Component Detail (top 15 by weight)</h2>
+    <table>
+      <thead><tr><th>Component</th><th>CPI Weight</th><th>YoY %</th><th>Source</th></tr></thead>
+      <tbody>
+        <tr>
+          <td style="padding-left:12px">Owners Equiv. Rent</td>
+          <td style="text-align:center">24.0%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+3.3%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">FRED</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Food at home</td>
+          <td style="text-align:center">8.7%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+2.7%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">FRED</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Rent of residence</td>
+          <td style="text-align:center">7.7%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+2.9%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">FRED</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Medical services</td>
+          <td style="text-align:center">7.0%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+3.6%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">FRED</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Food away from home</td>
+          <td style="text-align:center">4.8%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+3.5%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">FRED</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Utilities & fuel</td>
+          <td style="text-align:center">4.5%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+3.5%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Fallback (historical avg)</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Household furnishings</td>
+          <td style="text-align:center">4.0%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+0.5%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Fallback (historical avg)</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Communication</td>
+          <td style="text-align:center">3.7%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+1.2%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Fallback (historical avg)</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Gasoline</td>
+          <td style="text-align:center">3.4%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">–</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Not available</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">New vehicles</td>
+          <td style="text-align:center">3.0%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+0.2%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">FRED</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Electricity</td>
+          <td style="text-align:center">2.9%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">–</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Not available</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Tuition & fees</td>
+          <td style="text-align:center">2.8%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+3.2%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Fallback (historical avg)</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Apparel</td>
+          <td style="text-align:center">2.4%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+0.5%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Fallback (historical avg)</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Personal care</td>
+          <td style="text-align:center">2.4%</td>
+          <td style="text-align:center;color:#404040;font-weight:600">+4.0%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Fallback (historical avg)</span></td>
+        </tr>
+        <tr>
+          <td style="padding-left:12px">Vehicle insurance</td>
+          <td style="text-align:center">2.1%</td>
+          <td style="text-align:center;color:#c0504d;font-weight:600">+8.0%</td>
+          <td><span style="font-size:10px;background:#e8f0f8;padding:1px 5px;border-radius:3px">Fallback (historical avg)</span></td>
+        </tr></tbody>
+    </table>
+  </div>
+
+  <!-- Methodology note -->
+  <div class="card" style="margin-top:20px;font-size:12px;color:#666;line-height:1.7">
+    <h2>Methodology</h2>
+    <strong>What this is:</strong> A CPI nowcast that replicates ~93.5% of the BLS CPI-U basket using real-time data from public APIs
+    (EIA for energy, FRED/BLS for rents & vehicles, Zillow for leading OER signal). Remaining components use recent historical averages as fallback.<br><br>
+    <strong>Key caveat:</strong> OER (24% of CPI) has a 12-15 month lag vs market rents — our estimate uses the BLS OER series directly,
+    which means housing inflation is already "baked in" for the next 12 months regardless of where market rents go today.<br><br>
+    <strong>Data sources:</strong> EIA Open Data API &nbsp;|&nbsp; FRED API (St. Louis Fed) &nbsp;|&nbsp; Zillow Research CSV &nbsp;|&nbsp; BLS Public API<br>
+    <strong>Update frequency:</strong> Daily at 08:00 UTC via GitHub Actions
+  </div>
+
+</div>
+
+<div class="footer">
+  Built with Python + GitHub Actions + GitHub Pages &nbsp;|&nbsp; Data: EIA, FRED, Zillow, BLS &nbsp;|&nbsp; Not investment advice
+</div>
+
+<script>
+const labels = ["2026-06-11"];
+const estData = [2.93];
+const offData = ["null"];
+
+new Chart(document.getElementById('histChart'), {
+  type: 'line',
+  data: {
+    labels: labels,
+    datasets: [
+      {
+        label: 'Our Estimate',
+        data: estData,
+        borderColor: '#2e75b6',
+        backgroundColor: 'rgba(46,117,182,0.08)',
+        borderWidth: 2,
+        pointRadius: 2,
+        tension: 0.3,
+        fill: true,
+      },
+      {
+        label: 'BLS Official',
+        data: offData,
+        borderColor: '#c0504d',
+        borderWidth: 2,
+        borderDash: [5,3],
+        pointRadius: 3,
+        tension: 0.3,
+      },
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom', labels: { font: { size: 11 }, boxWidth: 12 } },
+      tooltip: { mode: 'index', intersect: false }
+    },
+    scales: {
+      y: { title: { display: true, text: 'YoY %', font: { size: 11 } }, ticks: { font: { size: 10 } } },
+      x: { ticks: { font: { size: 10 }, maxTicksLimit: 8 } }
+    }
+  }
+});
+</script>
 </body>
 </html>

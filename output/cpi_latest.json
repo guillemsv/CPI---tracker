@@ -1,0 +1,362 @@
+{
+  "timestamp": "2026-06-11T09:27:45.247181Z",
+  "estimate": {
+    "headline_cpi_pct": 2.93,
+    "core_cpi_pct": 2.82,
+    "basket_coverage_pct": 93.5,
+    "weight_covered": 90.5
+  },
+  "category_breakdown": {
+    "housing": {
+      "label": "Housing",
+      "color": "#1F4E79",
+      "weight": 40.2,
+      "avg_yoy_pct": 2.98,
+      "contribution_bp": 119.9
+    },
+    "food": {
+      "label": "Food",
+      "color": "#2D8653",
+      "weight": 13.5,
+      "avg_yoy_pct": 3.02,
+      "contribution_bp": 40.7
+    },
+    "energy": {
+      "label": "Energy",
+      "color": "#C55A11",
+      "weight": 7.5,
+      "avg_yoy_pct": 8.86,
+      "contribution_bp": 10.6
+    },
+    "transport": {
+      "label": "Transportation",
+      "color": "#7B3F00",
+      "weight": 8.100000000000001,
+      "avg_yoy_pct": 2.45,
+      "contribution_bp": 19.8
+    },
+    "medical": {
+      "label": "Medical Care",
+      "color": "#843C0C",
+      "weight": 8.8,
+      "avg_yoy_pct": 3.34,
+      "contribution_bp": 29.4
+    },
+    "education": {
+      "label": "Education & Comm.",
+      "color": "#4472C4",
+      "weight": 6.5,
+      "avg_yoy_pct": 2.06,
+      "contribution_bp": 13.4
+    },
+    "recreation": {
+      "label": "Recreation",
+      "color": "#7030A0",
+      "weight": 5.7,
+      "avg_yoy_pct": 2.26,
+      "contribution_bp": 12.9
+    },
+    "apparel": {
+      "label": "Apparel",
+      "color": "#595959",
+      "weight": 2.4,
+      "avg_yoy_pct": 0.5,
+      "contribution_bp": 1.2
+    },
+    "other": {
+      "label": "Other",
+      "color": "#404040",
+      "weight": 4.1,
+      "avg_yoy_pct": 4.12,
+      "contribution_bp": 16.9
+    }
+  },
+  "component_detail": [
+    {
+      "key": "oer",
+      "label": "Owners Equiv. Rent",
+      "category": "housing",
+      "weight": 24.0,
+      "is_core": true,
+      "yoy_pct": 3.32,
+      "contribution_bp": 79.68,
+      "source": "FRED",
+      "covered": true
+    },
+    {
+      "key": "food_home",
+      "label": "Food at home",
+      "category": "food",
+      "weight": 8.7,
+      "is_core": false,
+      "yoy_pct": 2.73,
+      "contribution_bp": 23.75,
+      "source": "FRED",
+      "covered": true
+    },
+    {
+      "key": "rent",
+      "label": "Rent of residence",
+      "category": "housing",
+      "weight": 7.7,
+      "is_core": true,
+      "yoy_pct": 2.92,
+      "contribution_bp": 22.48,
+      "source": "FRED",
+      "covered": true
+    },
+    {
+      "key": "medical_services",
+      "label": "Medical services",
+      "category": "medical",
+      "weight": 7.0,
+      "is_core": true,
+      "yoy_pct": 3.56,
+      "contribution_bp": 24.92,
+      "source": "FRED",
+      "covered": true
+    },
+    {
+      "key": "food_away",
+      "label": "Food away from home",
+      "category": "food",
+      "weight": 4.8,
+      "is_core": false,
+      "yoy_pct": 3.54,
+      "contribution_bp": 16.99,
+      "source": "FRED",
+      "covered": true
+    },
+    {
+      "key": "utilities",
+      "label": "Utilities & fuel",
+      "category": "housing",
+      "weight": 4.5,
+      "is_core": true,
+      "yoy_pct": 3.5,
+      "contribution_bp": 15.75,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "furnishings",
+      "label": "Household furnishings",
+      "category": "housing",
+      "weight": 4.0,
+      "is_core": true,
+      "yoy_pct": 0.5,
+      "contribution_bp": 2.0,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "communication",
+      "label": "Communication",
+      "category": "education",
+      "weight": 3.7,
+      "is_core": true,
+      "yoy_pct": 1.2,
+      "contribution_bp": 4.44,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "gasoline",
+      "label": "Gasoline",
+      "category": "energy",
+      "weight": 3.4,
+      "is_core": false,
+      "yoy_pct": null,
+      "contribution_bp": null,
+      "source": "Not available",
+      "covered": false
+    },
+    {
+      "key": "new_vehicles",
+      "label": "New vehicles",
+      "category": "transport",
+      "weight": 3.0,
+      "is_core": true,
+      "yoy_pct": 0.24,
+      "contribution_bp": 0.72,
+      "source": "FRED",
+      "covered": true
+    },
+    {
+      "key": "electricity",
+      "label": "Electricity",
+      "category": "energy",
+      "weight": 2.9,
+      "is_core": false,
+      "yoy_pct": null,
+      "contribution_bp": null,
+      "source": "Not available",
+      "covered": false
+    },
+    {
+      "key": "tuition",
+      "label": "Tuition & fees",
+      "category": "education",
+      "weight": 2.8,
+      "is_core": true,
+      "yoy_pct": 3.2,
+      "contribution_bp": 8.96,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "apparel",
+      "label": "Apparel",
+      "category": "apparel",
+      "weight": 2.4,
+      "is_core": true,
+      "yoy_pct": 0.5,
+      "contribution_bp": 1.2,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "personal_care",
+      "label": "Personal care",
+      "category": "other",
+      "weight": 2.4,
+      "is_core": true,
+      "yoy_pct": 4.0,
+      "contribution_bp": 9.6,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "vehicle_insurance",
+      "label": "Vehicle insurance",
+      "category": "transport",
+      "weight": 2.1,
+      "is_core": true,
+      "yoy_pct": 8.0,
+      "contribution_bp": 16.8,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "pets",
+      "label": "Pets & related",
+      "category": "recreation",
+      "weight": 2.0,
+      "is_core": true,
+      "yoy_pct": 3.5,
+      "contribution_bp": 7.0,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "recreation_admissions",
+      "label": "Admissions & sports",
+      "category": "recreation",
+      "weight": 1.9,
+      "is_core": true,
+      "yoy_pct": 5.0,
+      "contribution_bp": 9.5,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "used_vehicles",
+      "label": "Used vehicles",
+      "category": "transport",
+      "weight": 1.8,
+      "is_core": true,
+      "yoy_pct": -1.99,
+      "contribution_bp": -3.58,
+      "source": "FRED",
+      "covered": true
+    },
+    {
+      "key": "medical_goods",
+      "label": "Drugs & equipment",
+      "category": "medical",
+      "weight": 1.8,
+      "is_core": true,
+      "yoy_pct": 2.5,
+      "contribution_bp": 4.5,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "recreation_tech",
+      "label": "Video/audio/tech",
+      "category": "recreation",
+      "weight": 1.8,
+      "is_core": true,
+      "yoy_pct": -2.0,
+      "contribution_bp": -3.6,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "natural_gas",
+      "label": "Natural gas",
+      "category": "energy",
+      "weight": 0.9,
+      "is_core": false,
+      "yoy_pct": 11.15,
+      "contribution_bp": 10.04,
+      "source": "EIA",
+      "covered": true
+    },
+    {
+      "key": "tobacco",
+      "label": "Tobacco",
+      "category": "other",
+      "weight": 0.9,
+      "is_core": true,
+      "yoy_pct": 5.0,
+      "contribution_bp": 4.5,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "misc_services",
+      "label": "Misc. services",
+      "category": "other",
+      "weight": 0.8,
+      "is_core": true,
+      "yoy_pct": 3.5,
+      "contribution_bp": 2.8,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "public_transport",
+      "label": "Public transport",
+      "category": "transport",
+      "weight": 0.7,
+      "is_core": true,
+      "yoy_pct": 4.5,
+      "contribution_bp": 3.15,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "vehicle_repair",
+      "label": "Vehicle repair",
+      "category": "transport",
+      "weight": 0.5,
+      "is_core": true,
+      "yoy_pct": 5.5,
+      "contribution_bp": 2.75,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    },
+    {
+      "key": "fuel_oil",
+      "label": "Fuel oil",
+      "category": "energy",
+      "weight": 0.3,
+      "is_core": false,
+      "yoy_pct": 2.0,
+      "contribution_bp": 0.6,
+      "source": "Fallback (historical avg)",
+      "covered": true
+    }
+  ]
+}
