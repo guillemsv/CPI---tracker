@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-14T09:56:03.947271Z",
+  "timestamp": "2026-07-15T10:01:54.294511Z",
   "estimate": {
-    "headline_cpi_pct": 2.94,
-    "core_cpi_pct": 2.82,
+    "headline_cpi_pct": 2.68,
+    "core_cpi_pct": 2.54,
     "basket_coverage_pct": 93.5,
     "weight_covered": 90.5
   },
@@ -11,15 +11,15 @@
       "label": "Housing",
       "color": "#1F4E79",
       "weight": 40.2,
-      "avg_yoy_pct": 2.98,
-      "contribution_bp": 119.9
+      "avg_yoy_pct": 2.71,
+      "contribution_bp": 109.0
     },
     "food": {
       "label": "Food",
       "color": "#2D8653",
       "weight": 13.5,
-      "avg_yoy_pct": 3.02,
-      "contribution_bp": 40.7
+      "avg_yoy_pct": 2.83,
+      "contribution_bp": 38.2
     },
     "energy": {
       "label": "Energy",
@@ -32,15 +32,15 @@
       "label": "Transportation",
       "color": "#7B3F00",
       "weight": 8.100000000000001,
-      "avg_yoy_pct": 2.45,
-      "contribution_bp": 19.8
+      "avg_yoy_pct": 2.47,
+      "contribution_bp": 20.0
     },
     "medical": {
       "label": "Medical Care",
       "color": "#843C0C",
       "weight": 8.8,
-      "avg_yoy_pct": 3.34,
-      "contribution_bp": 29.4
+      "avg_yoy_pct": 2.17,
+      "contribution_bp": 19.1
     },
     "education": {
       "label": "Education & Comm.",
@@ -78,8 +78,8 @@
       "category": "housing",
       "weight": 24.0,
       "is_core": true,
-      "yoy_pct": 3.32,
-      "contribution_bp": 79.68,
+      "yoy_pct": 2.97,
+      "contribution_bp": 71.28,
       "source": "FRED",
       "covered": true
     },
@@ -89,8 +89,8 @@
       "category": "food",
       "weight": 8.7,
       "is_core": false,
-      "yoy_pct": 2.73,
-      "contribution_bp": 23.75,
+      "yoy_pct": 2.69,
+      "contribution_bp": 23.4,
       "source": "FRED",
       "covered": true
     },
@@ -100,8 +100,8 @@
       "category": "housing",
       "weight": 7.7,
       "is_core": true,
-      "yoy_pct": 2.92,
-      "contribution_bp": 22.48,
+      "yoy_pct": 2.6,
+      "contribution_bp": 20.02,
       "source": "FRED",
       "covered": true
     },
@@ -111,8 +111,8 @@
       "category": "medical",
       "weight": 7.0,
       "is_core": true,
-      "yoy_pct": 3.56,
-      "contribution_bp": 24.92,
+      "yoy_pct": 2.09,
+      "contribution_bp": 14.63,
       "source": "FRED",
       "covered": true
     },
@@ -122,8 +122,8 @@
       "category": "food",
       "weight": 4.8,
       "is_core": false,
-      "yoy_pct": 3.54,
-      "contribution_bp": 16.99,
+      "yoy_pct": 3.08,
+      "contribution_bp": 14.78,
       "source": "FRED",
       "covered": true
     },
@@ -177,8 +177,8 @@
       "category": "transport",
       "weight": 3.0,
       "is_core": true,
-      "yoy_pct": 0.24,
-      "contribution_bp": 0.72,
+      "yoy_pct": 0.47,
+      "contribution_bp": 1.41,
       "source": "FRED",
       "covered": true
     },
@@ -265,8 +265,8 @@
       "category": "transport",
       "weight": 1.8,
       "is_core": true,
-      "yoy_pct": -1.99,
-      "contribution_bp": -3.58,
+      "yoy_pct": -2.26,
+      "contribution_bp": -4.07,
       "source": "FRED",
       "covered": true
     },
@@ -360,13 +360,13 @@
     }
   ],
   "official": {
-    "headline_cpi_pct": 4.17,
-    "date": "2026-05-01",
+    "headline_cpi_pct": 3.46,
+    "date": "2026-06-01",
     "source": "BLS Official",
-    "core_cpi_pct": 2.82
+    "core_cpi_pct": 2.57
   },
   "accuracy": {
-    "error_pp": -1.23,
-    "note": "Our estimate vs BLS: -1.23pp"
+    "error_pp": -0.78,
+    "note": "Our estimate vs BLS: -0.78pp"
   }
 }
