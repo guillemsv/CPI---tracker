@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-07-22T10:23:47.498052Z",
+  "timestamp": "2026-07-23T10:20:15.341878Z",
   "estimate": {
     "headline_cpi_pct": 2.68,
     "core_cpi_pct": 2.54,
@@ -358,5 +358,15 @@
       "source": "Fallback (historical avg)",
       "covered": true
     }
-  ]
+  ],
+  "official": {
+    "headline_cpi_pct": 3.46,
+    "date": "2026-06-01",
+    "source": "BLS Official",
+    "core_cpi_pct": 2.57
+  },
+  "accuracy": {
+    "error_pp": -0.78,
+    "note": "Our estimate vs BLS: -0.78pp"
+  }
 }
