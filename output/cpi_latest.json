@@ -1,7 +1,7 @@
 {
-  "timestamp": "2026-10-29T14:56:07.755576Z",
+  "timestamp": "2026-10-30T14:48:47.645700Z",
   "estimate": {
-    "headline_cpi_pct": 2.67,
+    "headline_cpi_pct": 2.66,
     "core_cpi_pct": 2.71,
     "basket_coverage_pct": 93.5,
     "weight_covered": 90.5
@@ -25,8 +25,8 @@
       "label": "Energy",
       "color": "#C55A11",
       "weight": 7.5,
-      "avg_yoy_pct": 3.48,
-      "contribution_bp": 4.2
+      "avg_yoy_pct": 2.76,
+      "contribution_bp": 3.3
     },
     "transport": {
       "label": "Transportation",
@@ -298,8 +298,8 @@
       "category": "energy",
       "weight": 0.9,
       "is_core": false,
-      "yoy_pct": 3.97,
-      "contribution_bp": 3.57,
+      "yoy_pct": 3.01,
+      "contribution_bp": 2.71,
       "source": "EIA",
       "covered": true
     },
@@ -366,7 +366,7 @@
     "core_cpi_pct": 2.57
   },
   "accuracy": {
-    "error_pp": -1.05,
-    "note": "Our estimate vs BLS: -1.05pp"
+    "error_pp": -1.06,
+    "note": "Our estimate vs BLS: -1.06pp"
   }
 }
